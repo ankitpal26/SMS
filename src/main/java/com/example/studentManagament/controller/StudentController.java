@@ -17,12 +17,12 @@ public class StudentController {
     private StudentService studentService;
 
     @PostMapping
-    public ResponseEntity<Student> createStudent(Student student){
+    public ResponseEntity<Student> createStudent(@RequestBody Student student){
         return ResponseEntity.status(HttpStatus.CREATED).body(studentService.create(student));
     }
 
     @PutMapping("/{studentId}")
-    public ResponseEntity<Student> updateStudent (@PathVariable Integer studentId, Student student){
+    public ResponseEntity<Student> updateStudent (@PathVariable Integer studentId,@RequestBody Student student){
         return ResponseEntity.status(HttpStatus.CREATED).body(studentService.updateStudent(student,studentId));
     }
 
