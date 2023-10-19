@@ -33,12 +33,15 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public void delete(int studentId) {
-      Student student = studentRepo.findById(studentId).orElseThrow( ()-> new ResourceNotFoundException("This student id is not found :" +studentId));
+        studentRepo.deleteById(studentId);
     }
+
 
     @Override
     public Student updateStudent(Student student, int studentId) {
         Optional<Student> student1=studentRepo.findById(studentId);
+
+        if(student1.isPresent()) {
             Student studentUpdate = student1.get();
             studentUpdate.setAddress(student.getAddress());
             studentUpdate.setEmail(student.getEmail());
@@ -46,7 +49,8 @@ public class StudentServiceImpl implements StudentService {
             studentUpdate.setFirstName(student.getFirstName());
             studentUpdate.setLastName(student.getLastName());
             studentUpdate.setMobile(student.getMobile());
-
-        return studentUpdate;
+            Student  newStudent= studentRepo.save(studentUpdate);
+        }
+        return student;
     }
 }
